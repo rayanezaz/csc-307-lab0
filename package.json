@@ -7,6 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "start": "npm --workspace react-frontend start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
