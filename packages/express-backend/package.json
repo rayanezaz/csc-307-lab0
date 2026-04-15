@@ -8,7 +8,7 @@
   "main": "backend.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon backend.js",
+    "dev": "npx nodemon backend.js",
     "start": "node backend.js"
   },
   "dependencies": {
