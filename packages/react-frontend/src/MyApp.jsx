@@ -33,11 +33,35 @@ function MyApp() {
   }
 
   function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+    const id = characters[index].id;
+    fetch(`http://localhost:8000/users/${id}`, {
+      method: "DELETE",
+  })
+    .then((res) => {
+      if (res.status === 204) {
+        const updated = characters.filter((character, i) => i !== index);
+        setCharacters(updated);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    setCharacters(updated);
-    }
+  }
+
+  function updateList(person) {
+  postUser (person)
+    .then((res) => {
+      if (res.status === 201) {
+        return res.json();
+      }
+    })
+    .then((newUser) => {
+      setCharacters([...characters, newUser]);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
   return (
   <div className="container">
@@ -46,13 +70,6 @@ function MyApp() {
   </div>
 );
 
-function updateList(person) {
-  postUser (person)
-    .then(() => setCharacters([...characters, person]))
-    .catch((error) => {
-      console.log(error);
-    });
-}
 }
 
 export default MyApp;

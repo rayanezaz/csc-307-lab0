@@ -24,10 +24,15 @@ const findUserByName = (name) => {
 const findUserById = (id) =>
     users["users_list"].find((user) => user["id"] === id);
 
-const addUser = (user) => {
-    users["users_list"].push(user);
-    return user;
+function generateId() {
+  return Math.random().toString(36).substring(2, 9);
 }
+
+const addUser = (user) => {
+  const newUser = { id: generateId(), ... user };
+  users["users_list"].push(newUser);
+  return newUser;
+};
 
 const deleteUserById = (id) => {
   const index = users["users_list"].findIndex((user) => user["id"] === id);
@@ -74,8 +79,8 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.send();
+    const newUser = addUser(userToAdd);
+    res.status(201).send(newUser);
 });
 
 app.delete("/users/:id", (req, res) => {
@@ -85,7 +90,7 @@ app.delete("/users/:id", (req, res) => {
   if (!deleted) {
     res.status(404).send("Resource not found.");
   } else {
-    res.send();
+    res.status(204).send();
   }
 });
 
